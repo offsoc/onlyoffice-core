@@ -1644,7 +1644,7 @@ namespace MetaFile
 			const unsigned int unHeight = std::min(((unsigned int)fabs(oClipRect.Bottom - oClipRect.Top)), ((unsigned int)nHeight));
 
 			m_pInterpretator->DrawBitmap(arPoints[0].X, arPoints[0].Y, arPoints[1].X - arPoints[0].X - m_pDC->GetPixelWidth(), arPoints[2].Y - arPoints[0].Y - m_pDC->GetPixelHeight(),
-			                             (NULL != pNewBuffer) ? pNewBuffer : pPixels, unWidth, unHeight);
+			                             (NULL != pNewBuffer) ? pNewBuffer : pPixels, unWidth, unHeight, BLEND_MODE_DEFAULT);
 
 			RELEASEINTERFACE(pGrRenderer);
 			RELEASEARRAYOBJECTS(pNewBuffer);
@@ -1725,7 +1725,7 @@ namespace MetaFile
 		BYTE* pNewBuffer = GetClipedImage(pBytes, unWidth, unHeight, oClipRect);
 
 		m_pInterpretator->DrawBitmap(arPoints[0].X, arPoints[0].Y, arPoints[1].X - arPoints[0].X, arPoints[2].Y - arPoints[0].Y,
-				(NULL != pNewBuffer) ? pNewBuffer : pBytes, fabs(oClipRect.Right - oClipRect.Left), fabs(oClipRect.Bottom - oClipRect.Top));
+				(NULL != pNewBuffer) ? pNewBuffer : pBytes, fabs(oClipRect.Right - oClipRect.Left), fabs(oClipRect.Bottom - oClipRect.Top), BLEND_MODE_DEFAULT);
 
 		if (!bExternalBuffer)
 			RELEASEARRAYOBJECTS(pBytes);
