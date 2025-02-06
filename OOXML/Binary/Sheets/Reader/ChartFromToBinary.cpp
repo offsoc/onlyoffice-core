@@ -7424,7 +7424,7 @@ namespace BinXlsxRW
 			{
 				OOX::CChartDrawing* pDrawing = (OOX::CChartDrawing*)oFile.GetPointer();
 				
-				smart_ptr<OOX::IFileContainer> oldRels = m_pOfficeDrawingConverter->GetRels();
+				OOX::IFileContainer* oldRels = m_pOfficeDrawingConverter->GetRels();
 				m_pOfficeDrawingConverter->SetRels(pDrawing);
 				
 				int nCurPos = m_oBcw.WriteItemStart(c_oserct_chartspaceUSERSHAPES);
@@ -7433,7 +7433,7 @@ namespace BinXlsxRW
 					m_oBcw.m_oStream.WriteLONG(pDrawing->m_arrItems.size());
 				m_oBcw.WriteItemEnd(nCurPos1);
 				
-				smart_ptr<OOX::IFileContainer> oldRelsStream = m_oBcw.m_oStream.GetRels();
+				OOX::IFileContainer* oldRelsStream = m_oBcw.m_oStream.GetRels();
 				m_oBcw.m_oStream.SetRels(pDrawing);
 
 				for (size_t i = 0; i < pDrawing->m_arrItems.size(); i++)

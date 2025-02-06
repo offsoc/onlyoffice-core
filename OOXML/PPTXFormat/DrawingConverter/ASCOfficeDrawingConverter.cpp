@@ -2822,7 +2822,7 @@ void CDrawingConverter::ConvertShape(PPTX::Logic::SpTreeElem *elem, XmlUtils::CX
 			{
 				std::wstring sId = oNodeTextData.GetAttribute(L"id");
 
-				if (sId.length() > 0 && m_pBinaryWriter->GetRels().IsInit())
+				if (sId.length() > 0 && m_pBinaryWriter->GetRels())
 				{
 					OOX::RId rId(sId);
 					smart_ptr<PPTX::LegacyDiagramText> pExt = m_pBinaryWriter->GetRels()->Get<PPTX::LegacyDiagramText>(rId);
@@ -6762,15 +6762,11 @@ OOX::CContentTypes* CDrawingConverter::GetContentTypes()
 	return m_pImageManager->m_pContentTypes;
 }
 
-void CDrawingConverter::SetRels(smart_ptr<OOX::IFileContainer> container)
-{
-	m_pBinaryWriter->SetRels(container);
-}
 void CDrawingConverter::SetRels(OOX::IFileContainer *container)
 {
 	m_pBinaryWriter->SetRels(container);
 }
-smart_ptr<OOX::IFileContainer> CDrawingConverter::GetRels()
+OOX::IFileContainer* CDrawingConverter::GetRels()
 {
 	return m_pBinaryWriter->GetRels();
 }

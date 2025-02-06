@@ -784,7 +784,20 @@ namespace OOX
 		CGroup::CGroup(OOX::Document *pMain) : CVmlCommonElements(pMain)
 		{
 		}
-		CGroup::~CGroup(){}
+		CGroup::~CGroup()
+		{
+			for (size_t i = 0; i < m_arrElements.size(); ++i)
+			{
+				if (m_arrElements[i]) delete m_arrElements[i];
+			}
+			m_arrElements.clear();
+
+			for (size_t i = 0; i < m_arrShapeTypes.size(); ++i)
+			{
+				if (m_arrShapeTypes[i]) delete m_arrShapeTypes[i];
+			}
+			m_arrShapeTypes.clear();
+		}
 		EElementType CGroup::getType() const
 		{
 			return OOX::et_v_group;

@@ -166,7 +166,7 @@ namespace PPTX
 
 			if (pWriter)
 			{
-				pRels = pWriter->GetRels().GetPointer();
+				pRels = pWriter->GetRels();
 			}
 
 			bool result = LoadDrawing(&pRelsPPTX);
@@ -175,8 +175,8 @@ namespace PPTX
 		}
 		void SmartArt::toPPTY(NSBinPptxRW::CBinaryFileWriter* pWriter) const
 		{
-			NSCommon::smart_ptr<OOX::IFileContainer> documentContainer = pWriter->GetRels();
-			OOX::IFileContainer* pDocumentRels = documentContainer.is_init() ? documentContainer.GetPointer() : NULL;
+			OOX::IFileContainer* documentContainer = pWriter->GetRels();
+			OOX::IFileContainer* pDocumentRels = documentContainer;
 
 			BinDocxRW::CDocxSerializer *main_document = pWriter->m_pMainDocument;
 			pWriter->m_pMainDocument = NULL;
@@ -490,7 +490,7 @@ namespace PPTX
 		}
 		void ChartRec::toPPTY(NSBinPptxRW::CBinaryFileWriter* pWriter) const
 		{
-			OOX::IFileContainer* pRels = pWriter->GetRels().GetPointer();
+			OOX::IFileContainer* pRels = pWriter->GetRels();
 
 			smart_ptr<OOX::File> file;
 			if(id_data.IsInit())
@@ -543,7 +543,7 @@ namespace PPTX
 							DocWrapper::FontProcessor oFontProcessor;
 							NSBinPptxRW::CDrawingConverter oDrawingConverter;
 
-							NSCommon::smart_ptr<OOX::IFileContainer>	old_rels = pWriter->GetRels();
+							OOX::IFileContainer*  old_rels = pWriter->GetRels();
 							NSCommon::smart_ptr<PPTX::Theme>            old_theme = *pWriter->m_pTheme;
 
 							NSShapeImageGen::CMediaManager* old_manager = oDrawingConverter.m_pBinaryWriter->m_pCommon->m_pMediaManager;
@@ -626,8 +626,8 @@ namespace PPTX
 			
 			pWriter->m_pMainDocument = NULL;
 			oDrawingConverter.m_pBinaryWriter = pWriter;
-			smart_ptr<OOX::IFileContainer> oldRels = oDrawingConverter.GetRels();
-			oDrawingConverter.SetRels(file.smart_dynamic_cast<OOX::IFileContainer>());
+			OOX::IFileContainer* oldRels = oDrawingConverter.GetRels();
+			oDrawingConverter.SetRels(file.smart_dynamic_cast<OOX::IFileContainer>().GetPointer());
 		
 			BinXlsxRW::BinaryChartWriter oBinaryChartWriter(*pWriter, &oDrawingConverter);	
 			if (pChart.IsInit())

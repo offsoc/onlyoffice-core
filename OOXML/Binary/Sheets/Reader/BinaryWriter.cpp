@@ -4540,11 +4540,11 @@ void BinaryWorksheetTableWriter::WriteWorksheet(OOX::Spreadsheet::CSheet* pSheet
 	
 	WriteControls(oWorksheet, currentVmlDrawing.GetPointer());
 
-	smart_ptr<OOX::IFileContainer> oldRels;
+	OOX::IFileContainer* oldRels = NULL;
 	if (currentDrawing.IsInit())
 	{
 		oldRels = m_pOfficeDrawingConverter->GetRels();
-		m_pOfficeDrawingConverter->SetRels(currentDrawing.smart_dynamic_cast<OOX::IFileContainer>());
+		m_pOfficeDrawingConverter->SetRels(currentDrawing.smart_dynamic_cast<OOX::IFileContainer>().GetPointer());
 	}
 	if (currentDrawing.IsInit() || currentVmlDrawing.IsInit())
 	{
@@ -4552,7 +4552,7 @@ void BinaryWorksheetTableWriter::WriteWorksheet(OOX::Spreadsheet::CSheet* pSheet
 			WriteDrawings(oWorksheet, currentDrawing.GetPointer(), currentVmlDrawing.GetPointer());
 		m_oBcw.WriteItemWithLengthEnd(nCurPos);
 	}
-	if (oldRels.IsInit())
+	if (oldRels)
 	{
 		m_pOfficeDrawingConverter->SetRels(oldRels);
 	}
@@ -6599,7 +6599,7 @@ void BinaryWorksheetTableWriter::WriteDrawing(const OOX::Spreadsheet::CWorksheet
 			}
 			sVmlXml += L"</v:object>";
 
-            smart_ptr<OOX::IFileContainer> oldRels = m_pOfficeDrawingConverter->GetRels();
+			OOX::IFileContainer* oldRels = m_pOfficeDrawingConverter->GetRels();
 			m_pOfficeDrawingConverter->SetRels(pVmlDrawing);
 
 			std::wstring* bstrOutputXml = NULL;
@@ -6614,7 +6614,7 @@ void BinaryWorksheetTableWriter::WriteDrawing(const OOX::Spreadsheet::CWorksheet
 	}
 	else if (pCellAnchor->m_oElement.IsInit())
 	{
-		smart_ptr<OOX::IFileContainer> oldRels = m_oBcw.m_oStream.GetRels();
+		OOX::IFileContainer* oldRels = m_oBcw.m_oStream.GetRels();
 		m_oBcw.m_oStream.SetRels(pDrawing);
 
 		m_oBcw.m_oStream.WriteBYTE(c_oSer_DrawingType::pptxDrawing);
@@ -6754,7 +6754,7 @@ void BinaryWorksheetTableWriter::WriteLegacyDrawingHF(const OOX::Spreadsheet::CW
 		if (oFileV.IsInit() && OOX::FileTypes::VmlDrawing == oFileV->type())
 		{
 			OOX::CVmlDrawing* pVmlDrawing = (OOX::CVmlDrawing*)oFileV.GetPointer();
-			smart_ptr<OOX::IFileContainer> oldRels = m_pOfficeDrawingConverter->GetRels();
+			OOX::IFileContainer* oldRels = m_pOfficeDrawingConverter->GetRels();
 			m_pOfficeDrawingConverter->SetRels(pVmlDrawing);
 			m_pOfficeDrawingConverter->Clear();
 			nCurPos = m_oBcw.WriteItemStart(c_oSer_LegacyDrawingHF::Drawings);

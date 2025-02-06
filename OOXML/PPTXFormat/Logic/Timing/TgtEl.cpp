@@ -97,7 +97,7 @@ namespace PPTX
 
 					if (!pRels && (pWriter))
 					{
-						pRels = pWriter->GetRels().GetPointer();
+						pRels = pWriter->GetRels();
 					}
 
 					smart_ptr<OOX::Media> pMedia;

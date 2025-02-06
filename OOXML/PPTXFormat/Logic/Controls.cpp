@@ -251,7 +251,7 @@ namespace PPTX
 					RELEASEOBJECT(oDrawingConverter.m_pBinaryWriter->m_pCommon->m_pMediaManager);
 					oDrawingConverter.m_pBinaryWriter->m_pCommon->m_pMediaManager = pWriter->m_pCommon->m_pMediaManager;
 
-					oDrawingConverter.SetRels(rels);
+					oDrawingConverter.SetRels(rels.GetPointer());
 
 					std::vector<nullable<PPTX::Logic::SpTreeElem>> elements;
 					nullable<OOX::WritingElement> anchor;
@@ -259,8 +259,8 @@ namespace PPTX
 					oDrawingConverter.ConvertVml(temp, elements, anchor);
 					oDrawingConverter.m_pBinaryWriter->m_pCommon->m_pMediaManager = NULL;
 
-					smart_ptr<OOX::IFileContainer> rels_old = pWriter->GetRels();
-					pWriter->SetRels(rels);
+					OOX::IFileContainer* rels_old = pWriter->GetRels();
+					pWriter->SetRels(rels.GetPointer());
 					for (size_t i = 0; i < elements.size(); ++i)
 					{
 						pWriter->WriteRecord2(0, elements[i]);

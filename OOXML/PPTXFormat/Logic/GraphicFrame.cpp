@@ -554,7 +554,7 @@ namespace PPTX
 				RELEASEOBJECT(oDrawingConverter.m_pBinaryWriter->m_pCommon->m_pMediaManager);
 				oDrawingConverter.m_pBinaryWriter->m_pCommon->m_pMediaManager = pWriter->m_pCommon->m_pMediaManager;
 	
-				oDrawingConverter.SetRels(xml_object_rels);
+				oDrawingConverter.SetRels(xml_object_rels.GetPointer());
                 oDrawingConverter.SetAdditionalParam(L"xfrm_override", (BYTE*)xfrm.GetPointer(), sizeof(xfrm));
 
 				std::vector<nullable<PPTX::Logic::SpTreeElem>> elements;
@@ -563,8 +563,8 @@ namespace PPTX
 				oDrawingConverter.ConvertVml(temp, elements, anchor);
 				oDrawingConverter.m_pBinaryWriter->m_pCommon->m_pMediaManager = NULL;
 
-				smart_ptr<OOX::IFileContainer> rels_old = pWriter->GetRels();
-				pWriter->SetRels(xml_object_rels);
+				OOX::IFileContainer* rels_old = pWriter->GetRels();
+				pWriter->SetRels(xml_object_rels.GetPointer());
 				for (size_t i = 0; i < elements.size(); ++i)
 				{
 					elements[i]->toPPTY(pWriter);

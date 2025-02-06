@@ -493,7 +493,7 @@ void BinaryHeaderFooterTableWriter::WriteHdrFtrItem(OOX::Logic::CSectionProperty
 
 	BinaryDocumentTableWriter oBinaryDocumentTableWriter(m_oParamsWriter, oParamsDocumentWriter, m_mapIgnoreComments, NULL);
 	
-	smart_ptr<OOX::IFileContainer> oldRels = m_pOfficeDrawingConverter->GetRels();
+	OOX::IFileContainer* oldRels = m_pOfficeDrawingConverter->GetRels();
 	m_pOfficeDrawingConverter->SetRels(oParamsDocumentWriter.m_pRels);
 	m_pOfficeDrawingConverter->Clear();
 
@@ -8461,7 +8461,7 @@ void BinaryCommentsTableWriter::Write(OOX::CComments& oComments, OOX::CCommentsE
 	ParamsDocumentWriter oParamsDocumentWriter(&oComments);
 	m_oParamsWriter.m_pCurRels = oParamsDocumentWriter.m_pRels;
 
-	smart_ptr<OOX::IFileContainer> oldRels = m_pOfficeDrawingConverter->GetRels();
+	OOX::IFileContainer* oldRels = m_pOfficeDrawingConverter->GetRels();
 	m_pOfficeDrawingConverter->SetRels(oParamsDocumentWriter.m_pRels);
 	m_pOfficeDrawingConverter->Clear();
 
@@ -8475,7 +8475,7 @@ void BinaryCommentsTableWriter::WriteCommentsContent(OOX::CComments& oComments, 
 {
 	BinaryDocumentTableWriter oBinaryDocumentTableWriter(m_oParamsWriter, oParamsDocumentWriter, &m_oParamsWriter.m_mapIgnoreComments, NULL);
 
-	smart_ptr<OOX::IFileContainer> oldRels = m_pOfficeDrawingConverter->GetRels();
+	OOX::IFileContainer* oldRels = m_pOfficeDrawingConverter->GetRels();
 	m_pOfficeDrawingConverter->SetRels(oParamsDocumentWriter.m_pRels);
 	m_pOfficeDrawingConverter->Clear();
 
@@ -9529,7 +9529,7 @@ void BinaryNotesTableWriter::WriteNotes(const std::vector<OOX::CFtnEdn*>& arrNot
 {
 	BinaryDocumentTableWriter oBinaryDocumentTableWriter(m_oParamsWriter, oParamsDocumentWriter, &m_oParamsWriter.m_mapIgnoreComments, NULL);
 
-	smart_ptr<OOX::IFileContainer> oldRels = m_pOfficeDrawingConverter->GetRels();
+	OOX::IFileContainer* oldRels = m_pOfficeDrawingConverter->GetRels();
 	m_pOfficeDrawingConverter->SetRels(oParamsDocumentWriter.m_pRels);
 	m_pOfficeDrawingConverter->Clear();
 

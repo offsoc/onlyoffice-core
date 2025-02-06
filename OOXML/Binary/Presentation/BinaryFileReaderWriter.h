@@ -255,12 +255,11 @@ namespace NSBinPptxRW
 		NSCommon::smart_ptr<PPTX::Theme>*			m_pTheme;
 		NSCommon::smart_ptr<PPTX::Logic::ClrMap>*	m_pClrMap;
 		
-		void SetRels(NSCommon::smart_ptr<OOX::IFileContainer> container);
-		void SetRels(OOX::IFileContainer *container);
-		NSCommon::smart_ptr<OOX::IFileContainer> GetRels();
+		void SetRels(OOX::IFileContainer* container);
+		OOX::IFileContainer* GetRels();
 
 	protected:
-		NSCommon::smart_ptr<OOX::IFileContainer>*	m_pCurrentContainer;
+		OOX::IFileContainer*	m_pCurrentContainer;
 		
 		BYTE*		m_pStreamData;
 		BYTE*		m_pStreamCur;
